@@ -1,40 +1,25 @@
-using TaskManager.Models;
+var builder = WebApplication.CreateBuilder(args);
 
-namespace TaskManager;
+// Add services to the container.
+builder.Services.AddControllersWithViews();
 
-public static class TaskStore
+var app = builder.Build();
+
+// Configure the HTTP request pipeline.
+if (!app.Environment.IsDevelopment())
 {
-    private static List<TaskItem> Tasks { get; } = new();
-
-    public static List<TaskItem> GetTasks()
-    {
-        return Tasks;
-    }
-
-    public static void AddTask(TaskItem item)
-    {
-        item.Id = Tasks.Any() ? Tasks.Last().Id + 1 : 1;
-
-        Tasks.Add(item);
-    }
-
-    public static void SetCompleted(int taskId)
-    {
-        var task = Tasks.FirstOrDefault(t => t.Id.Equals(taskId));
-
-        if (task != null)
-        {
-            task.Completed = true;
-        }
-    }
-
-    public static void DeleteTask(int taskId)
-    {
-        var taskToDelete = Tasks.FirstOrDefault(t => t.Id.Equals(taskId));
-
-        if (taskToDelete != null)
-        {
-            Tasks.Remove(taskToDelete);
-        }
-    }
+    app.UseExceptionHandler("/Home/Error");
+    // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
+    app.UseHsts();
 }
+
+app.UseHttpsRedirection();
+app.UseStaticFiles();
+app.UseRouting();
+app.UseAuthorization();
+
+app.MapControllerRoute(
+    name: "default",
+    pattern: "{controller=Home}/{action=Index}/{id?}");
+
+app.Run();
