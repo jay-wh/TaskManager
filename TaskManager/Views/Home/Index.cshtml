@@ -1,0 +1,82 @@
+﻿@model IEnumerable<TaskItem>
+
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="container">
+    <div class="row">
+        <div class="col-12">
+            <h2>Hello, user.</h2>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col">
+            @if (Model.Any())
+            {
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th scope="col" width="10%">Id</th>
+                            <th scope="col" width="20%">Title</th>
+                            <th scope="col" width="60%">Description</th>
+                            <th scope="col" width="10%" colspan="2">Actions</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        @foreach (var task in Model)
+                        {
+                            <tr>
+                                <th scope="row">@task.Id</th>
+
+                                @if (task.Completed)
+                                {
+                                    <td>
+                                        @task.Title (Complete)
+                                    </td>
+                                }
+                                else
+                                {
+                                    <td>
+                                        @task.Title
+                                    </td>
+                                }
+
+                                <td>@task.Description</td>
+
+                                <td>
+                                    <form asp-action="Complete">
+                                        <input type="hidden" name="taskId" value="@task.Id" />
+                                        <input type="submit" class="btn btn-success" value="Complete" disabled="@task.Completed" />
+                                    </form>
+                                </td>
+
+                                <td>
+                                    <form asp-action="Delete">
+                                        <input type="hidden" name="taskId" value="@task.Id" />
+                                        <input type="submit" class="btn btn-danger" value="Delete" />
+                                    </form>
+                                </td>
+
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            }
+            else
+            {
+                <p>No outstanding tasks, add one below!</p>
+            }
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col">
+            <a class="btn btn-primary" href="@Url.Action("Create", "Home")" role="button">
+                Add a task
+            </a>
+        </div>
+    </div>
+</div>

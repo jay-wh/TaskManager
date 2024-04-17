@@ -1,0 +1,35 @@
+﻿@model TaskItem
+
+@{
+    ViewData["Title"] = "Create a Task";
+}
+
+<div class="container">
+    <form asp-action="Create">
+        <div class="row">
+            <div class="col-4">
+                @Html.LabelFor(m => m.Title, new { @class = "form-label" })
+                @Html.TextBoxFor(m => m.Title, new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.Title)
+            </div>
+
+            <div class="col-8">
+                <div class="mb-3">
+                    @Html.LabelFor(m => m.Description, new { @class = "form-label" })
+                    @Html.TextBoxFor(m => m.Description, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.Description)
+                </div>
+            </div>
+
+            <div class="col-12">
+                <div class="mt-4">
+                    <input type="submit" class="btn btn-primary" value="Submit" />
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+@section Scripts {
+    @{ await Html.RenderPartialAsync("_ValidationScriptsPartial"); }
+}
