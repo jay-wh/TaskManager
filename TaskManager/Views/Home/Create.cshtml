@@ -14,11 +14,9 @@
             </div>
 
             <div class="col-8">
-                <div class="mb-3">
-                    @Html.LabelFor(m => m.Description, new { @class = "form-label" })
-                    @Html.TextBoxFor(m => m.Description, new { @class = "form-control" })
-                    @Html.ValidationMessageFor(m => m.Description)
-                </div>
+                @Html.LabelFor(m => m.Description, new { @class = "form-label" })
+                @Html.TextBoxFor(m => m.Description, new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.Description)
             </div>
 
             <div class="col-12">
@@ -31,5 +29,7 @@
 </div>
 
 @section Scripts {
-    @{ await Html.RenderPartialAsync("_ValidationScriptsPartial"); }
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
 }
